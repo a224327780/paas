@@ -16,13 +16,13 @@ jobs:
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
-#       - name: "Activate Namespace"
-#         uses: okteto/namespace@latest
-#         with:
-#           namespace: qianbao2021
+      - name: "Activate Namespace"
+        uses: okteto/namespace@latest
+        with:
+          namespace: qianbao2021
 
-#       - name: "Trigger the pipeline"
-#         uses: okteto/pipeline@latest
-#         with:
-#           name: admin-mongo
-#           timeout: 8m
+      - name: "Trigger the pipeline"
+        uses: okteto/pipeline@latest
+        with:
+          name: admin-mongo
+          timeout: 8m
