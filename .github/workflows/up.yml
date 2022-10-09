@@ -19,7 +19,7 @@ jobs:
       - name: "Activate Namespace"
         uses: okteto/namespace@latest
         with:
-          namespace: zouhua8
+          namespace: atcooc123
 
       - name: "Trigger the pipeline"
         uses: okteto/pipeline@latest
