@@ -3,8 +3,8 @@ name: MongoDB
 on:
   push:
     branches: [ dev ]
-  schedule:
-    - cron: '0 18 * * *'
+  # schedule:
+  #   - cron: '0 18 * * *'
 
 jobs:
   deploy:
