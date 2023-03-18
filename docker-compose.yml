@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    image: mongo
+    scale: 2
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=root
+    ports:
+      - 27017
+    volumes:
+      - db:/data
+
+volumes:
+  db:
+    driver_opts:
+      size: 4Gi
