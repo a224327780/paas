@@ -2,7 +2,7 @@ name: MongoDB
 
 on:
   push:
-    branches: [ mongodb ]
+    branches: [ dev ]
   schedule:
     - cron: '0 18 * * *'
 
@@ -26,5 +26,5 @@ jobs:
       - name: "Trigger the pipeline"
         uses: okteto/pipeline@latest
         with:
-          name: mongodb
+          name: dev
           timeout: 8m
