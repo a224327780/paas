@@ -1,7 +1,7 @@
 services:
   mongodb:
     image: bitnami/mongodb
-    scale: 2
+    scale: 1
     environment:
       - MONGODB_ROOT_PASSWORD=${PASSWORD}
       - MONGODB_ENABLE_JOURNAL=false
