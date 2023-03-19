@@ -4,7 +4,10 @@ services:
     scale: 1
     environment:
       - MONGODB_ROOT_PASSWORD=${PASSWORD}
-      - MONGODB_ENABLE_JOURNAL=false
+      - MONGODB_ENABLE_JOURNAL=true
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=123456
+      - MONGODB_DATABASE=db0
     volumes:
       - db:/bitnami/mongodb
 
