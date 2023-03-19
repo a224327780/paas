@@ -1,6 +1,7 @@
 services:
   terminal:
-    image: modenaf360/gotty
+    public: true
+    build: .
     scale: 1
     ports:
       - 8080
