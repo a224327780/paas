@@ -1,7 +1,8 @@
 services:
   terminal:
     public: true
-    build: terminal
+    build: 
+      dockerfile: ./terminal/Dockerfile
     scale: 1
     ports:
       - 8080
