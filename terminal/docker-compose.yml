@@ -1,7 +1,7 @@
 services:
   terminal:
     public: true
-    build: .
+    build: terminal
     scale: 1
     ports:
       - 8080
