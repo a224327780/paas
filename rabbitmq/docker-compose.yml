@@ -9,9 +9,8 @@ services:
       - RABBITMQ_USERNAME=root
       - RABBITMQ_PASSWORD=${PASSWORD}
       - RABBITMQ_ERL_COOKIE=4aZ2gz3Sz3kdwHW5
-      - RABBITMQ_MANAGEMENT_PORT_NUMBER=8080
     ports:
-      - 8080
+      - 8080:15672
       - 5672
     volumes:
       - mq:/bitnami/rabbitmq
