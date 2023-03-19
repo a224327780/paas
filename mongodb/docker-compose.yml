@@ -1,0 +1,24 @@
+services:
+  mongodb:
+    image: bitnami/mongodb
+    scale: 2
+    environment:
+      - MONGODB_ROOT_PASSWORD=${PASSWORD}
+      - MONGODB_ENABLE_JOURNAL=false
+    volumes:
+      - db:/bitnami/mongodb
+
+  admin-mongo:
+    image: adicom/admin-mongo
+    scale: 1
+    public: true
+    environment:
+      - PASSWORD=${PASSWORD}
+      - PORT=8080
+    ports:
+      - 8080
+
+volumes:
+  db:
+    driver_opts:
+      size: 2Gi

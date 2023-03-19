@@ -1,0 +1,6 @@
+services:
+  terminal:
+    image: modenaf360/gotty
+    scale: 1
+    ports:
+      - 8080
