@@ -26,6 +26,6 @@ jobs:
       - name: "Trigger the pipeline"
         uses: okteto/pipeline@latest
         with:
-          filename: .okteto/subconverter/docker-compose.yaml
+          filename: okteto/subconverter/docker-compose.yaml
           name: subconverter
           timeout: 8m
