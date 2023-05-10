@@ -1,8 +1,0 @@
-services:
-  terminal:
-    public: true
-    build: 
-      context: .
-    scale: 1
-    ports:
-      - 8080
