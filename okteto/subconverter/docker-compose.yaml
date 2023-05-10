@@ -3,4 +3,4 @@ services:
     image: tindy2013/subconverter:latest
     scale: 1
     ports:
-      - 25500
+      - 8080:25500
