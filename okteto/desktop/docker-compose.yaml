@@ -1,7 +1,9 @@
 services:
-  firefox:
+  dp:
     image: consol/debian-xfce-vnc
     scale: 1
+    environment:
+      - VNC_PW=${PASSWORD}
     ports:
       - 8080:6901
     shm_size: "2gb"
