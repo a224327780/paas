@@ -1,0 +1,7 @@
+services:
+  firefox:
+    image: lscr.io/linuxserver/firefox
+    scale: 1
+    ports:
+      - 8080:3000
+    shm_size: "2gb"
