@@ -1,5 +1,5 @@
 services:
-  dp:
+  xfce:
     image: caoyufei/xfce
     scale: 1
     ports:
