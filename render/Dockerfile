@@ -1,3 +1,0 @@
-FROM ghcr.io/a224327780/code-server
-ENV PORT=5000
-EXPOSE 5000/tcp
