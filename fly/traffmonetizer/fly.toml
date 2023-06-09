@@ -1,0 +1,32 @@
+# fly.toml app configuration file generated for tm04 on 2023-06-02T20:33:56+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "tm04"
+primary_region = "lax"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
+
+[build]
+  image = "traffmonetizer/cli"
+
+[processes]
+  worker = "start accept --token BC6voto3yoMGt+rg+mmDM9wkjwph7Zql+Drq+AVxDkE= --device-name fly4"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["worker"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]

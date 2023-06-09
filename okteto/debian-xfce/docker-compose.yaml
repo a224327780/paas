@@ -1,0 +1,7 @@
+services:
+  dp:
+    image: caoyufei/xfce
+    scale: 1
+    ports:
+      - 8080:6901
+    shm_size: "2gb"
