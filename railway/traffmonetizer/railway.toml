@@ -1,0 +1,7 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "start accept --token BC6voto3yoMGt+rg+mmDM9wkjwph7Zql+Drq+AVxDkE= --device-name railway"
+restartPolicyType = "never"
