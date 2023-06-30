@@ -1,18 +1,15 @@
 services:
   code:
-    image: lscr.io/linuxserver/code-server
+    image: ghcr.io/a224327780/code-server
     scale: 1
     ports:
-      - 8080:8443
+      - 8080:7071
     environment:
       - PASSWORD=admin001
-      - TZ=Asia/Shanghai
-      - DEFAULT_WORKSPACE=/config/workspace
-      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:code-server-zsh 
     volumes:
-      - code:/config
+      - code:/data
 
 volumes:
   code:
     driver_opts:
-      size: 2Gi
+      size: 3Gi
