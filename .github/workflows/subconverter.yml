@@ -7,7 +7,7 @@ on:
     - cron: '0 18 * * *'
 
 jobs:
-  deploy:
+  atcooc123:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -29,3 +29,28 @@ jobs:
           filename: okteto/subconverter/docker-compose.yaml
           name: subconverter
           timeout: 8m
+
+
+  atmaming01:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: context
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.OKTETO_TOKEN_MAMING }}
+
+      - name: "Activate Namespace"
+        uses: okteto/namespace@latest
+        with:
+          namespace: atmaming01
+
+      - name: "Trigger the pipeline"
+        uses: okteto/pipeline@latest
+        with:
+          filename: okteto/subconverter/docker-compose.yaml
+          name: subconverter
+          timeout: 8m
+
