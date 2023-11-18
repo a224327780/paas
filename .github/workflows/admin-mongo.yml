@@ -1,4 +1,4 @@
-name: RssHub
+name: AdminMongo
 
 on:
   push:
@@ -26,6 +26,6 @@ jobs:
       - name: "Trigger the pipeline"
         uses: okteto/pipeline@latest
         with:
-          filename: okteto/rsshub/docker-compose.yaml
-          name: rsshub
+          filename: okteto/admin-mongo/docker-compose.yaml
+          name: admin-mongo
           timeout: 8m

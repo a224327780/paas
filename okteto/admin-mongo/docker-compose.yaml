@@ -1,0 +1,8 @@
+services:
+  admin-mongo:
+    image: adicom/admin-mongo:latest
+    scale: 1
+    environment:
+      - PASSWORD=admin001
+    ports:
+      - 8080:1234
