@@ -1,0 +1,6 @@
+services:
+  rsshub:
+    image: diygod/rsshub:latest
+    scale: 1
+    ports:
+      - 8080:1200
