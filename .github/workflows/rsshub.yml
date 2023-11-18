@@ -1,0 +1,31 @@
+name: RssHub
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 18 * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: context
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
+
+      - name: "Activate Namespace"
+        uses: okteto/namespace@latest
+        with:
+          namespace: cooc11111
+
+      - name: "Trigger the pipeline"
+        uses: okteto/pipeline@latest
+        with:
+          filename: okteto/rsshub/docker-compose.yaml
+          name: rsshub
+          timeout: 8m
