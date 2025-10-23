@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表板 - CheckHub</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🎯 CheckHub</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link active">仪表板</a>
+                <a href="/sites/" class="nav-link">站点管理</a>
+                <a href="/auth/logout" class="nav-link">退出</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <div class="page-header">
+                <h2>📊 仪表板</h2>
+                <p>系统概览与运行状态</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🌐</div>
+                    <div class="stat-content">
+                        <div class="stat-label">总站点数</div>
+                        <div class="stat-value">{{ sites|length }}</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-label">启用站点</div>
+                        <div class="stat-value">{{ sites|selectattr('enabled')|list|length }}</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-label">总账户数</div>
+                        <div class="stat-value">{{ sites|sum(attribute='account_count') }}</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <div class="stat-label">日志文件</div>
+                        <div class="stat-value">{{ logs|length }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>🌐 站点列表</h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>站点名称</th>
+                                <th>状态</th>
+                                <th>账户数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for site in sites %}
+                            <tr>
+                                <td>{{ site.name }}</td>
+                                <td>
+                                    {% if site.enabled %}
+                                    <span class="badge badge-success">已启用</span>
+                                    {% else %}
+                                    <span class="badge badge-secondary">已禁用</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ site.account_count }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick="checkSite('{{ site.id }}')">立即签到</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>📝 最近日志</h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>文件名</th>
+                                <th>大小</th>
+                                <th>修改时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log.name }}</td>
+                                <td>{{ (log.size / 1024)|round(2) }} KB</td>
+                                <td>{{ log.modified }}</td>
+                                <td>
+                                    <a href="/logs/{{ log.name }}" target="_blank" class="btn btn-sm btn-secondary">查看</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script>
+        async function checkSite(siteId) {
+            if (!confirm('确定要立即签到此站点吗？')) return;
+            
+            try {
+                const response = await fetch(`/sites/api/check/${siteId}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('签到任务已完成！\n\n' + data.results.map(r => r.message).join('\n'));
+                } else {
+                    alert('签到失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

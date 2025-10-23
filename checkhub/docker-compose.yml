@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  checkhub:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./data:/app/data
+    environment:
+      - TZ=Asia/Shanghai
+    restart: unless-stopped

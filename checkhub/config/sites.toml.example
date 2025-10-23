@@ -1,0 +1,29 @@
+# 站点配置示例
+# 复制此文件为 sites.toml 并修改配置
+
+[example]
+name = "示例站点"
+enabled = true
+checker_class = "ExampleChecker"
+
+[[example.accounts]]
+username = "user1"
+password = "pass1"
+enabled = true
+
+[[example.accounts]]
+username = "user2"
+password = "pass2"
+enabled = true
+
+
+# 添加更多站点
+# [mysite]
+# name = "我的站点"
+# enabled = true
+# checker_class = "MyChecker"
+#
+# [[mysite.accounts]]
+# username = "account1"
+# password = "password1"
+# enabled = true

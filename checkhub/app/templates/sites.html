@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>站点管理 - CheckHub</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🎯 CheckHub</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">仪表板</a>
+                <a href="/sites/" class="nav-link active">站点管理</a>
+                <a href="/auth/logout" class="nav-link">退出</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <div class="page-header">
+                <h2>🌐 站点管理</h2>
+                <button class="btn btn-primary" onclick="showAddSiteModal()">+ 添加站点</button>
+            </div>
+            
+            <div class="sites-grid">
+                {% for site in sites %}
+                <div class="site-card" id="site-{{ site.id }}">
+                    <div class="site-header">
+                        <h3>{{ site.name }}</h3>
+                        <div class="site-status">
+                            {% if site.enabled %}
+                            <span class="badge badge-success">已启用</span>
+                            {% else %}
+                            <span class="badge badge-secondary">已禁用</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="site-info">
+                        <div class="info-item">
+                            <span class="info-label">站点ID:</span>
+                            <span class="info-value">{{ site.id }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">签到器:</span>
+                            <span class="info-value">{{ site.checker_class }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">账户数:</span>
+                            <span class="info-value">{{ site.accounts|length }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="site-accounts">
+                        <h4>账户列表</h4>
+                        {% if site.accounts %}
+                        <ul class="account-list">
+                            {% for account in site.accounts %}
+                            <li>
+                                <span class="account-username">{{ account.username }}</span>
+                                {% if account.enabled %}
+                                <span class="badge badge-success">✓</span>
+                                {% else %}
+                                <span class="badge badge-secondary">✗</span>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p class="empty-text">暂无账户</p>
+                        {% endif %}
+                        <button class="btn btn-sm btn-secondary" onclick="showAddAccountModal('{{ site.id }}')">添加账户</button>
+                    </div>
+                    
+                    <div class="site-actions">
+                        <button class="btn btn-sm btn-primary" onclick="checkSite('{{ site.id }}')">立即签到</button>
+                        <button class="btn btn-sm btn-warning" onclick="toggleSite('{{ site.id }}')">
+                            {% if site.enabled %}禁用{% else %}启用{% endif %}
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteSite('{{ site.id }}')">删除</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div id="addSiteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加站点</h3>
+                <span class="modal-close" onclick="closeModal('addSiteModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>站点ID</label>
+                    <input type="text" id="siteId" placeholder="例如: example" required>
+                </div>
+                <div class="form-group">
+                    <label>站点名称</label>
+                    <input type="text" id="siteName" placeholder="例如: 示例站点" required>
+                </div>
+                <div class="form-group">
+                    <label>签到器类</label>
+                    <input type="text" id="checkerClass" value="ExampleChecker" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addSiteModal')">取消</button>
+                <button class="btn btn-primary" onclick="addSite()">添加</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="addAccountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加账户</h3>
+                <span class="modal-close" onclick="closeModal('addAccountModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="accountSiteId">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="accountUsername" placeholder="输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="accountPassword" placeholder="输入密码" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addAccountModal')">取消</button>
+                <button class="btn btn-primary" onclick="addAccount()">添加</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script>
+        function showAddSiteModal() {
+            document.getElementById('addSiteModal').style.display = 'flex';
+        }
+        
+        function showAddAccountModal(siteId) {
+            document.getElementById('accountSiteId').value = siteId;
+            document.getElementById('addAccountModal').style.display = 'flex';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        async function addSite() {
+            const siteId = document.getElementById('siteId').value.trim();
+            const siteName = document.getElementById('siteName').value.trim();
+            const checkerClass = document.getElementById('checkerClass').value.trim();
+            
+            if (!siteId || !siteName) {
+                alert('请填写所有必填项');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/sites/api/add', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({id: siteId, name: siteName, checker_class: checkerClass})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('站点添加成功！');
+                    location.reload();
+                } else {
+                    alert('添加失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+        
+        async function addAccount() {
+            const siteId = document.getElementById('accountSiteId').value;
+            const username = document.getElementById('accountUsername').value.trim();
+            const password = document.getElementById('accountPassword').value.trim();
+            
+            if (!username || !password) {
+                alert('请填写所有必填项');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/sites/api/add_account/${siteId}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, password})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('账户添加成功！');
+                    location.reload();
+                } else {
+                    alert('添加失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+        
+        async function deleteSite(siteId) {
+            if (!confirm('确定要删除此站点吗？此操作不可恢复！')) return;
+            
+            try {
+                const response = await fetch(`/sites/api/delete/${siteId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('站点删除成功！');
+                    location.reload();
+                } else {
+                    alert('删除失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+        
+        async function toggleSite(siteId) {
+            try {
+                const response = await fetch(`/sites/api/toggle/${siteId}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('状态更新成功！');
+                    location.reload();
+                } else {
+                    alert('更新失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+        
+        async function checkSite(siteId) {
+            if (!confirm('确定要立即签到此站点吗？')) return;
+            
+            try {
+                const response = await fetch(`/sites/api/check/${siteId}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('签到任务已完成！\n\n' + data.results.map(r => r.message).join('\n'));
+                } else {
+                    alert('签到失败: ' + data.error);
+                }
+            } catch (error) {
+                alert('请求失败: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
