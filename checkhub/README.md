@@ -23,6 +23,7 @@
 - 📝 **日志记录** - 每天每个站点记录一个日志文件
 - 🔔 **通知推送** - 支持 Telegram 和钉钉通知
 - ⏰ **定时任务** - 支持定时自动签到
+- 💻 **双模式运行** - Web 管理界面 + 命令行模式
 - 🎨 **Web管理界面** - 现代化的管理界面
 - 🔒 **登录认证** - 安全的管理员登录系统
 - 🔧 **易于扩展** - 基于插件式签到器架构
@@ -92,6 +93,10 @@ enabled = true
 
 ## 🚀 运行
 
+### Web 管理模式
+
+适合需要可视化管理的场景：
+
 ```bash
 # 方式1: 直接运行
 python run.py
@@ -110,6 +115,29 @@ docker-compose up -d
 - 密码: `admin123`
 
 > ⚠️ **首次登录后请立即修改密码！**
+
+### 命令行模式
+
+适合定时任务和自动化场景：
+
+```bash
+# 运行所有启用的站点签到
+python checkin.py
+
+# 运行指定站点签到
+python checkin.py example
+
+# 运行多个指定站点
+python checkin.py example glados
+
+# 列出所有站点
+python checkin.py --list
+
+# 查看帮助
+python checkin.py --help
+```
+
+📖 **详细使用说明请查看 [CLI_GUIDE.md](CLI_GUIDE.md)**
 
 ## 🎯 开发自定义签到器
 
@@ -247,10 +275,15 @@ checkhub/
 完整的项目文档：
 
 - 📖 [快速开始指南](QUICKSTART.md) - 5分钟快速上手
-- 📘 [详细使用指南](USAGE.md) - 完整功能说明
+- 📋 [项目总览](OVERVIEW.md) - 完整项目概览
+- 💻 [命令行使用指南](CLI_GUIDE.md) - 命令行模式详细说明
+- 🎬 [功能演示](DEMO.md) - 实际使用演示
+- ⭐ [功能特性](FEATURES.md) - 功能详细说明
+- 📘 [详细使用指南](USAGE.md) - Web 界面使用说明
 - 🏗️ [架构设计文档](ARCHITECTURE.md) - 技术架构详解
 - 🔌 [API接口文档](API.md) - API使用说明
-- 📊 [项目总结](PROJECT_SUMMARY.md) - 项目概览
+- 📊 [项目总结](PROJECT_SUMMARY.md) - 项目开发总结
+- 🇨🇳 [中文详细说明](README_CN.md) - 完整中文文档
 
 ## 🖼️ 界面预览
 

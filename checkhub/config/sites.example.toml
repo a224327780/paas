@@ -1,0 +1,74 @@
+# CheckHub 站点配置示例
+# 复制此文件为 sites.toml 并修改配置
+
+# ========================================
+# 示例站点配置
+# ========================================
+[example]
+name = "示例站点"
+enabled = true
+checker_class = "ExampleChecker"
+
+[[example.accounts]]
+username = "user1"
+password = "pass1"
+enabled = true
+
+[[example.accounts]]
+username = "user2"
+password = "pass2"
+enabled = true
+
+# ========================================
+# GLaDOS 签到示例
+# ========================================
+[glados]
+name = "GLaDOS"
+enabled = false  # 改为 true 启用
+checker_class = "GladosChecker"
+
+[[glados.accounts]]
+username = "your_email@example.com"
+password = "your_password"
+enabled = true
+
+# ========================================
+# 自定义站点示例
+# ========================================
+# [mysite]
+# name = "我的站点"
+# enabled = true
+# checker_class = "MySiteChecker"
+# 
+# [[mysite.accounts]]
+# username = "myuser"
+# password = "mypass"
+# enabled = true
+# cookies = "session=xxx; token=yyy"  # 可选：Cookie 字符串
+# 
+# [[mysite.accounts]]
+# username = "myuser2"
+# password = "mypass2"
+# enabled = true
+
+# ========================================
+# 配置说明
+# ========================================
+# [站点ID] - 唯一标识符，建议使用英文字母和数字
+#   name: 站点显示名称
+#   enabled: 是否启用该站点（true/false）
+#   checker_class: 签到器类名（必须在代码中已注册）
+#
+# [[站点ID.accounts]] - 账户列表（可以有多个）
+#   username: 账户用户名或邮箱
+#   password: 账户密码
+#   enabled: 是否启用该账户（true/false）
+#   cookies: (可选) Cookie 字符串，用于需要预先登录的站点
+#   extra_data: (可选) 额外数据，格式为字典
+#
+# 注意事项:
+# 1. 配置文件使用 TOML 格式，语法简单易读
+# 2. 字符串需要用引号包围
+# 3. 布尔值使用 true 或 false（小写）
+# 4. 注释使用 # 开头
+# 5. 确保配置文件编码为 UTF-8

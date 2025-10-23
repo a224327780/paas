@@ -24,6 +24,7 @@
 除原需求外，还额外实现：
 
 - 🎨 现代化UI设计（渐变色 + 响应式）
+- 💻 双模式运行（Web + 命令行）
 - 🔧 Docker一键部署
 - 📚 完善的文档体系（3000+行）
 - 🧪 测试和安装脚本
@@ -100,10 +101,15 @@ BaseChecker (基类)
 ```bash
 cd checkhub
 ./install.sh
-python run.py
 ```
 
-### 访问系统
+### 运行方式
+
+#### 方式1：Web 管理模式
+
+```bash
+python run.py
+```
 
 浏览器打开：http://localhost:8000
 
@@ -113,6 +119,21 @@ python run.py
 ```
 
 > ⚠️ 首次登录后请立即修改密码
+
+#### 方式2：命令行模式
+
+```bash
+# 运行所有启用的站点签到
+python checkin.py
+
+# 运行指定站点签到
+python checkin.py example
+
+# 列出所有站点
+python checkin.py --list
+```
+
+📖 **详细命令行使用说明请查看 [CLI_GUIDE.md](CLI_GUIDE.md)**
 
 ### Docker 部署
 
