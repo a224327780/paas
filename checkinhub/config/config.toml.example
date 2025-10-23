@@ -1,0 +1,19 @@
+# CheckinHub 主配置文件
+
+[logging]
+level = "INFO"
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+console_output = true
+
+[notifications]
+# Telegram 通知配置
+[notifications.telegram]
+enabled = false
+bot_token = "YOUR_BOT_TOKEN"  # 从 @BotFather 获取
+chat_id = "YOUR_CHAT_ID"      # 从 @userinfobot 获取
+
+# 钉钉通知配置
+[notifications.dingtalk]
+enabled = false
+webhook = "YOUR_WEBHOOK_URL"  # 钉钉机器人 Webhook 地址
+secret = "YOUR_SECRET"        # 加签密钥（可选）

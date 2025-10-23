@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  checkinhub:
+    build: .
+    container_name: checkinhub
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+    environment:
+      - TZ=Asia/Shanghai
+    restart: unless-stopped

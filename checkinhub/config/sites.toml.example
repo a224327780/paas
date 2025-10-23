@@ -1,0 +1,55 @@
+# CheckinHub 站点配置文件
+
+# 示例站点（演示用）
+[example]
+name = "示例站点"
+enabled = true
+notify = true
+
+[[example.accounts]]
+username = "user1@example.com"
+password = "password123"
+cookie = ""
+enabled = true
+
+[[example.accounts]]
+username = "user2@example.com"
+password = "password456"
+cookie = ""
+enabled = true
+
+# GLaDOS 站点
+[glados]
+name = "GLaDOS"
+enabled = false
+notify = true
+
+[[glados.accounts]]
+username = "your@email.com"
+password = "your_password"
+cookie = "your_cookie_here"  # 必需：从浏览器获取
+enabled = true
+
+# HostLoc 论坛
+[hostloc]
+name = "HostLoc论坛"
+enabled = false
+notify = true
+
+[[hostloc.accounts]]
+username = "your_username"
+password = ""
+cookie = "your_cookie_here"  # 必需：从浏览器获取
+uid = "123456"               # 必需：你的用户ID
+enabled = true
+
+# 添加更多站点配置...
+# [mysite]
+# name = "我的站点"
+# enabled = true
+# notify = true
+#
+# [[mysite.accounts]]
+# username = "user@example.com"
+# password = "password"
+# enabled = true
