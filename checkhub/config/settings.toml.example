@@ -1,0 +1,20 @@
+# 系统设置示例
+# 复制此文件为 settings.toml 并修改配置
+
+[admin]
+username = "admin"
+password = "admin123"
+
+[notifications.telegram]
+enabled = false
+bot_token = "YOUR_BOT_TOKEN"
+chat_id = "YOUR_CHAT_ID"
+
+[notifications.dingtalk]
+enabled = false
+webhook = "YOUR_WEBHOOK_URL"
+secret = "YOUR_SECRET"
+
+[scheduler]
+enabled = true
+check_time = "08:00"
