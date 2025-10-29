@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  proxy-detector:
+    build: .
+    container_name: proxy-detector
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./output:/app/output
+      - ./proxies.txt:/app/proxies.txt:ro
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    command: python main.py --interval 3600

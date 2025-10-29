@@ -1,0 +1,96 @@
+# Proxy Detector Configuration
+
+# Data Sources Configuration
+data_sources:
+  # File-based source
+  - type: file
+    enabled: true
+    path: ./proxies.txt
+    format: line  # line, json, yaml
+    
+  # URL-based source
+  - type: url
+    enabled: false
+    url: https://example.com/proxies.txt
+    interval: 3600  # seconds
+    format: line
+    
+  # API-based source
+  - type: api
+    enabled: false
+    url: https://api.example.com/proxies
+    method: GET
+    headers:
+      Authorization: "Bearer YOUR_TOKEN"
+    interval: 3600
+
+# Detection Configuration
+detection:
+  timeout: 10  # seconds
+  concurrent_tasks: 50  # number of concurrent detection tasks
+  retry_attempts: 2
+  check_interval: 300  # seconds between detection cycles
+  
+  # Test URLs for validation
+  test_urls:
+    - https://www.google.com
+    - https://www.cloudflare.com
+  
+  # Expected response validation
+  validate_response: true
+  expected_status_codes: [200, 201, 204, 301, 302]
+
+# Mihomo Configuration
+mihomo:
+  enabled: true
+  binary_path: ./mihomo  # path to mihomo binary
+  config_template: ./config/mihomo-template.yaml
+  api_host: 127.0.0.1
+  api_port: 9090
+  http_port_start: 10000  # starting port for HTTP proxies
+  http_port_end: 10100    # ending port for HTTP proxies
+  
+  # Supported protocols that need mihomo conversion
+  supported_protocols:
+    - ss
+    - ssr
+    - vmess
+    - vless
+    - trojan
+    - hysteria
+    - hysteria2
+
+# Direct Protocol Support
+direct_protocols:
+  # These protocols can be tested directly without mihomo
+  - http
+  - https
+  - socks5
+
+# Logging Configuration
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}"
+  file: ./logs/proxy_detector.log
+  rotation: "10 MB"
+  retention: "7 days"
+
+# Output Configuration
+output:
+  # Save working proxies
+  save_working: true
+  working_proxies_file: ./output/working_proxies.txt
+  
+  # Save failed proxies
+  save_failed: true
+  failed_proxies_file: ./output/failed_proxies.txt
+  
+  # Export format
+  export_formats:
+    - txt
+    - json
+    - yaml
+  
+  # Statistics
+  save_statistics: true
+  statistics_file: ./output/statistics.json

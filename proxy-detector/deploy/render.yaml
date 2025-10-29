@@ -1,0 +1,9 @@
+services:
+  - type: worker
+    name: proxy-detector
+    env: docker
+    dockerfilePath: ../Dockerfile
+    envVars:
+      - key: TZ
+        value: UTC
+    autoDeploy: true

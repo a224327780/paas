@@ -1,0 +1,7 @@
+aiohttp==3.9.1
+aiofiles==23.2.1
+pyyaml==6.0.1
+python-socks[asyncio]==2.4.3
+loguru==0.7.2
+pydantic==2.5.2
+pydantic-settings==2.1.0

@@ -1,0 +1,26 @@
+# Fly.io deployment configuration for proxy-detector
+
+app = "proxy-detector"
+primary_region = "sin"
+
+[build]
+  dockerfile = "../Dockerfile"
+
+[env]
+  TZ = "UTC"
+
+[[mounts]]
+  source = "proxy_detector_data"
+  destination = "/app/output"
+
+[http_service]
+  internal_port = 8080
+  force_https = false
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
